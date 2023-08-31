@@ -1,49 +1,52 @@
 import string
 
 
-def unique(input_list):
+def unique(input_list: list) -> list:
     """ Вывод списка уникальных значений в консоль"""
 
-    temp = []
-    number_of_repetitions = 1
+    try:
+        temp = []
+        number_of_repetitions = 1
 
-    for i in input_list:
-        if input_list.count(i) > number_of_repetitions:
-            temp.append(i)
+        for i in input_list:
+            if input_list.count(i) > number_of_repetitions:
+                temp.append(i)
 
-    return list(set(temp))
+        return list(set(temp))
+    except TypeError:
+        print("The passed argument is not a list")
 
 
-def ten_common_words(text: str):
+def ten_common_words(text: str) -> None:
     """Данная функция принемает на вход строку и выводит в консоль 10 наиболее часто встречающихся слов"""
+    try:
+        for symbol in string.punctuation + '\n':
+            if symbol in text:
+                text = text.replace(symbol, '')
 
-    for symbol in string.punctuation + '\n':
-        if symbol in text:
-            text = text.replace(symbol, '')
+        up_text = text.upper()
+        text = up_text.split(" ")
+        dict_words = {}
 
-    up_text = text.upper()
-    text = up_text.split(" ")
-    dict_words = {}
+        for word in text:
+            value = text.count(word)
+            dict_words[word] = value
 
-    for word in text:
-        value = text.count(word)
-        dict_words[word] = value
+        sorted_dict = {}
+        sorted_keys = sorted(dict_words, key=dict_words.get, reverse=True)
 
-    sorted_dict = {}
-    sorted_keys = sorted(dict_words, key=dict_words.get, reverse=True)
+        for word in sorted_keys:
+            sorted_dict[word] = dict_words[word]
 
-    for word in sorted_keys:
-        sorted_dict[word] = dict_words[word]
+        count = 0
+        for key in sorted_dict:
+            if count == 10:
+                break
+            count += 1
 
-    count = 0
-    for key in sorted_dict:
-        if count == 10: break
-        count += 1
-
-        if 2 <= sorted_dict.get(key) <= 4 or 22 <= sorted_dict.get(key) <= 24:
-            print(f'Слово "{key}" встречается {sorted_dict.get(key)} раза')
-        else:
-            print(f'Слово "{key}" встречается {sorted_dict.get(key)} раз')
-
-
-
+            if 2 <= sorted_dict.get(key) <= 4 or 22 <= sorted_dict.get(key) <= 24:
+                print(f'Слово "{key}" встречается {sorted_dict.get(key)} раза')
+            else:
+                print(f'Слово "{key}" встречается {sorted_dict.get(key)} раз')
+    except:
+        print("The passed argument is not a list")
